@@ -70,8 +70,12 @@ install:
 before_build:
   # Yadoms sources
   - cmd: set
-  - ps: echo 'Downloading yadoms sources from ${APPVEYOR_REPO_BRANCH} branch...'
-  - ps: git clone --depth=1 -b ${APPVEYOR_REPO_BRANCH} git://github.com/Yadoms/yadoms.git 
+  - ps: echo 'Downloading yadoms sources from $APPVEYOR_REPO_BRANCH branch...'
+  - ps: git clone --depth=1 -b $APPVEYOR_REPO_BRANCH git://github.com/Yadoms/yadoms.git 
+  
+  # Read current Yadoms version
+  - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
+  - ps: echo 'Yadoms version is $YadomsVersion'
 
   # Yadoms configuration file
   - ps: pushd yadoms
@@ -105,11 +109,30 @@ build: off
   
 build_script:
   # Build and create installer
-  - ps: echo 'Build and create installer...'
   - ps: pushd yadoms/projects
+  - ps: echo 'Build...'
+  - ps: msbuild shared/all_unity.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - ps: echo 'Finalize output...'
+  - ps: cp ../config/yadoms.ini ../builds/$(configuration)/
+  - ps: rm ../builds/$(configuration)/.gitignore
+  - ps: echo 'Create packages...'
   - ps: msbuild PACKAGE.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
+  - ps: echo 'yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe'
 
 artifacts:
-  - path: bin\$(configuration)\*
-    name: Yadoms
+  - path: yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe
+    name: 'Yadoms installer'
+    
+  - path: yadoms/builds/$(configuration)/Yadoms-$YadomsVersion-win32.zip  
+    name: 'Yadoms portable'
+    
+deploy:
+  - provider: FTP
+    protocol: ftp
+    host: ftp.jano42.fr
+    username: janofnxr-yadoms
+    password:
+      secure: 8tosT9FAJxX+SRgkw02I1A==
+    folder: appveyor_build/win32
+    debug: true     # show complete FTP log
