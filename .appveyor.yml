@@ -69,7 +69,8 @@ install:
 # scripts to run before build
 before_build:
   # Yadoms sources
-  - ps: echo 'Downloading yadoms sources...'
+  - cmd: set
+  - ps: echo 'Downloading yadoms sources from ${APPVEYOR_REPO_BRANCH} branch...'
   - ps: git clone --depth=1 -b ${APPVEYOR_REPO_BRANCH} git://github.com/Yadoms/yadoms.git 
 
   # Yadoms configuration file
@@ -99,11 +100,16 @@ before_build:
   - cmd: cmake_windows.cmd
   - ps: popd
   
+build: off
+  # Use custom build
   
-build:
-  parallel: false                       # enable MSBuild parallel builds
-  project: yadoms/projects/yadoms.sln   # path to Visual Studio solution or project
+build_script:
+  # Build and create installer
+  - ps: echo 'Build and create installer...'
+  - ps: pushd yadoms/projects
+  - ps: msbuild PACKAGE.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - ps: popd
 
-  # MSBuild verbosity level
-  verbosity: normal
-
+artifacts:
+  - path: bin\$(configuration)\*
+    name: Yadoms
