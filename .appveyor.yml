@@ -32,7 +32,7 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - ps: Get-ChildItem Env\:
+  - ps: "Get-ChildItem Env:"
   - ps: echo $env:buildBranch
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
