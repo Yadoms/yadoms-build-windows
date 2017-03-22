@@ -32,6 +32,9 @@ cache:
 
 # scripts that run after cloning repository
 install:
+  - ps: echo $BUILD_BRANCH
+  - ps: echo %BUILD_BRANCH%
+  - cmd: echo %BUILD_BRANCH%
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
   - ps: echo "Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM..."
   - ps: |
@@ -52,8 +55,6 @@ install:
         }
      }
   # Download extra libs
-  - ps: echo 'Downloading yadoms sources from $BUILD_BRANCH branch...'
-  - ps: echo $BUILD_BRANCH
   - ps: echo "Download extra libs..."
   - ps: if (!(Test-Path 'extra_libs')) { mkdir 'extra_libs' }
   - ps: pushd extra_libs
