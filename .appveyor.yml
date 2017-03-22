@@ -52,6 +52,8 @@ install:
         }
      }
   # Download extra libs
+  - ps: echo 'Downloading yadoms sources from $BUILD_BRANCH branch...'
+  - ps: echo $BUILD_BRANCH
   - ps: echo "Download extra libs..."
   - ps: if (!(Test-Path 'extra_libs')) { mkdir 'extra_libs' }
   - ps: pushd extra_libs
@@ -70,8 +72,9 @@ install:
 before_build:
   # Yadoms sources
   - cmd: set
-  - ps: echo 'Downloading yadoms sources from $(BUILD_BRANCH) branch...'
-  - ps: git clone --depth=1 -b $(BUILD_BRANCH) git://github.com/Yadoms/yadoms.git 
+  - ps: echo 'Downloading yadoms sources from $BUILD_BRANCH branch...'
+  - ps: echo $BUILD_BRANCH
+  - ps: git clone --depth=1 -b $BUILD_BRANCH git://github.com/Yadoms/yadoms.git 
   
   # Read current Yadoms version
   - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
@@ -121,10 +124,10 @@ build_script:
   - ps: echo 'yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe'
 
 artifacts:
-  - path: yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe
+  - path: yadoms/builds/package/Yadoms-*.exe
     name: 'Yadoms installer'
     
-  - path: yadoms/builds/$(configuration)/Yadoms-$YadomsVersion-win32.zip  
+  - path: yadoms/builds/package/Yadoms-*.zip
     name: 'Yadoms portable'
     
 deploy:
