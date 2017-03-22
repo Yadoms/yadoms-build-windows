@@ -122,13 +122,19 @@ build_script:
   - ps: msbuild PACKAGE.vcxproj /p:Configuration=$env:configuration /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
   - ps: ls 'yadoms/builds/package'
+  
+after_build:
+  # Needed step to remove directory structure of artifacts
+  - appveyor PushArtifact yadoms/builds/package/Yadoms-*.exe -FileName Yadoms-*.exe -DeploymentName 'Yadoms installer'
+  - appveyor PushArtifact yadoms/builds/package/Yadoms-*.zip -FileName Yadoms-*.zip -DeploymentName 'Yadoms portable'
 
-artifacts:
-  - path: yadoms/builds/package/Yadoms-*.exe
-    name: 'Yadoms installer'
+
+# artifacts:
+  # - path: yadoms/builds/package/Yadoms-*.exe
+    # name: 'Yadoms installer'
     
-  - path: yadoms/builds/package/Yadoms-*.zip
-    name: 'Yadoms portable'
+  # - path: yadoms/builds/package/Yadoms-*.zip
+    # name: 'Yadoms portable'
     
 deploy:
   - provider: FTP
@@ -137,5 +143,5 @@ deploy:
     username: janofnxr-yadoms
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
-    folder: appveyor_build/win32/yadoms/builds/package
+    folder: appveyor_build/win32
     debug: true     # show complete FTP log
