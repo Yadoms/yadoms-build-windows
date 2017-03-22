@@ -35,6 +35,8 @@ install:
   - ps: echo $BUILD_BRANCH
   - ps: echo %BUILD_BRANCH%
   - cmd: echo %BUILD_BRANCH%
+  - ps: echo %build_branch%
+  - cmd: echo %build_branch%
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
   - ps: echo "Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM..."
   - ps: |
