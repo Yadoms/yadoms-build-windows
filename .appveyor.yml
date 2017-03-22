@@ -125,9 +125,11 @@ build_script:
   
 after_build:
   # Needed step to remove directory structure of artifacts
-  - appveyor PushArtifact yadoms/builds/package/Yadoms-*.exe -FileName Yadoms-*.exe -DeploymentName 'Yadoms installer'
-  - appveyor PushArtifact yadoms/builds/package/Yadoms-*.zip -FileName Yadoms-*.zip -DeploymentName 'Yadoms portable'
-
+  - ps: |
+     $packageFile = Get-ChildItem "yadoms/builds/package" -Name -Filter *.exe
+     Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms installer'
+     $packageFile = Get-ChildItem "yadoms/builds/package" -Name -Filter *.zip
+     Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms portable'
 
 # artifacts:
   # - path: yadoms/builds/package/Yadoms-*.exe
