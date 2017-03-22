@@ -116,8 +116,8 @@ build_script:
   - ps: echo 'Build...'
   - ps: msbuild shared/all_unity.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: echo 'Finalize output...'
-  - ps: cp ../config/yadoms.ini ../builds/$(configuration)/
-  - ps: rm ../builds/$(configuration)/.gitignore
+  - ps: cp ../config/yadoms.ini ../builds/$env:configuration/
+  - ps: rm ../builds/$env:configuration/.gitignore
   - ps: echo 'Create packages...'
   - ps: msbuild PACKAGE.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
