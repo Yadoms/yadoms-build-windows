@@ -20,6 +20,15 @@ platform: Win32
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
+init:
+  - ps: echo "`n"
+  - ps: echo "###"
+  - ps: echo "###"
+  - ps: echo "### Build and deploy Yadoms from $env:buildBranch branch
+  - ps: echo "###"
+  - ps: echo "###"
+  - ps: echo "`n`n"
+
 # Add pre-compiled dependancies in cache
 cache:
   - extra_libs\boost_1_61_0 -> '.appveyor.yml'
@@ -32,9 +41,6 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - ps: "Get-ChildItem Env:"
-  - ps: echo $env:buildBranch
-  - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
   - ps: echo "Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM..."
   - ps: |
