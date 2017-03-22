@@ -32,11 +32,9 @@ cache:
 
 # scripts that run after cloning repository
 install:
-  - ps: echo $BUILD_BRANCH
+  - ps: echo $$env:BUILD_BRANCH
   - ps: echo %BUILD_BRANCH%
-  - cmd: echo %BUILD_BRANCH%
-  - ps: echo %build_branch%
-  - cmd: echo %build_branch%
+  - ps: echo %$env:build_branch%
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
   - ps: echo "Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM..."
   - ps: |
