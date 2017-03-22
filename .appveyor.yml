@@ -23,7 +23,7 @@ configuration: Release
 init:
   - ps: echo "`n### Build and deploy Yadoms from $env:buildBranch branch`n`n"
   
-  - cmd: git clone -q --depth=1 --branch=$env:buildBranch git://github.com/Yadoms/yadoms.git 
+  - ps: git clone -q --depth=1 --branch=$env:buildBranch git://github.com/Yadoms/yadoms.git 
   
 
 # Add pre-compiled dependancies in cache
