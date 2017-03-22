@@ -97,6 +97,7 @@ before_build:
   - ps: Add-Content 'yadoms/sources/CMakeListsUserConfig.txt' ('set(COTIRE_USE ON)')
   - ps: Add-Content 'yadoms/sources/CMakeListsUserConfig.txt' ('set(COTIRE_USE_UNITY ON)')
   - ps: Add-Content 'yadoms/sources/CMakeListsUserConfig.txt' ('set(PYTHON_USE_SOURCES OFF)')
+  - ps: Add-Content 'yadoms/sources/CMakeListsUserConfig.txt' ('set(USE_NSIS ON)')
   - ps: cat 'yadoms/sources/CMakeListsUserConfig.txt'
 
   # For CMake version < 3.9, overwrite FindProtobuf.cmake
@@ -136,5 +137,5 @@ deploy:
     username: janofnxr-yadoms
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
-    folder: appveyor_build/win32
+    folder: appveyor_build/win32/yadoms/builds/package
     debug: true     # show complete FTP log
