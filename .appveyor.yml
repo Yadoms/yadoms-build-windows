@@ -121,7 +121,7 @@ build_script:
   - ps: echo 'Create packages...'
   - ps: msbuild PACKAGE.vcxproj /p:Configuration=$env:configuration /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
-  - ps: echo 'yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe'
+  - ps: ls 'yadoms/builds/package'
 
 artifacts:
   - path: yadoms/builds/package/Yadoms-*.exe
