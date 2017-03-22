@@ -23,8 +23,6 @@ configuration: Release
 init:
   - ps: echo "`n### Build and deploy Yadoms from $env:buildBranch branch`n`n"
   
-  - cmd: git clone -q --depth=1 --branch=2_0_0-rc_1 git://github.com/Yadoms/yadoms.git 
-  - cmd: rmdir yadoms
   - cmd: git clone -q --depth=1 --branch=$env:buildBranch git://github.com/Yadoms/yadoms.git 
   
 
