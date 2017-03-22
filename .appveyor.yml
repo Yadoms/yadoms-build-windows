@@ -24,7 +24,7 @@ init:
   - ps: echo "`n"
   - ps: echo "###"
   - ps: echo "###"
-  - ps: echo "### Build and deploy Yadoms from $env:buildBranch branch
+  - ps: echo "### Build and deploy Yadoms from $env:buildBranch branch"
   - ps: echo "###"
   - ps: echo "###"
   - ps: echo "`n`n"
