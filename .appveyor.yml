@@ -114,12 +114,12 @@ build_script:
   # Build and create installer
   - ps: pushd yadoms/projects
   - ps: echo 'Build...'
-  - ps: msbuild shared/all_unity.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - ps: msbuild shared/all_unity.vcxproj /p:Configuration=$env:configuration /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: echo 'Finalize output...'
   - ps: cp ../config/yadoms.ini ../builds/$env:configuration/
   - ps: rm ../builds/$env:configuration/.gitignore
   - ps: echo 'Create packages...'
-  - ps: msbuild PACKAGE.vcxproj /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - ps: msbuild PACKAGE.vcxproj /p:Configuration=$env:configuration /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
   - ps: echo 'yadoms/builds/$(configuration)/Yadoms-$(Yadoms)Version-win32.exe'
 
