@@ -32,8 +32,9 @@ cache:
 
 # scripts that run after cloning repository
 install:
+  - ps: Get-ChildItem Env:
   - ps: echo $env:buildBranch
-  - ps: echo 'Downloading yadoms sources from $env:buildBranch branch...'
+  - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   # Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM
   - ps: echo "Remove not wanted PostgreSQL pre-installed versions from the Appveyor VM..."
   - ps: |
@@ -71,7 +72,7 @@ install:
 # scripts to run before build
 before_build:
   # Yadoms sources
-  - ps: echo 'Downloading yadoms sources from $env:buildBranch branch...'
+  - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   - ps: git clone --depth=1 -b $env:buildBranch git://github.com/Yadoms/yadoms.git 
   
   # Read current Yadoms version
