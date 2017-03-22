@@ -1,8 +1,8 @@
-# Notes:
-#   - Minimal appveyor.yml file is an empty file. All sections are optional.
-#   - Indent each level of configuration with 2 spaces. Do not use tabs!
-#   - All section names are case-sensitive.
-#   - Section names should be unique on each level.
+# Appveyor script to build and deploy Yadoms for Windows
+
+environment:
+  # Set here the branch (from original yadoms repository) to build and deploy
+  BUILD_BRANCH: master
 
 # version format
 version: 1.0.{build}
@@ -70,8 +70,8 @@ install:
 before_build:
   # Yadoms sources
   - cmd: set
-  - ps: echo 'Downloading yadoms sources from $APPVEYOR_REPO_BRANCH branch...'
-  - ps: git clone --depth=1 -b $APPVEYOR_REPO_BRANCH git://github.com/Yadoms/yadoms.git 
+  - ps: echo 'Downloading yadoms sources from $(BUILD_BRANCH) branch...'
+  - ps: git clone --depth=1 -b $(BUILD_BRANCH) git://github.com/Yadoms/yadoms.git 
   
   # Read current Yadoms version
   - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
