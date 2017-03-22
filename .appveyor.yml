@@ -23,8 +23,6 @@ configuration: Release
 init:
   - ps: echo "`n### Build and deploy Yadoms from $env:buildBranch branch`n`n"
   
-  - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git 
-  
 
 # Add pre-compiled dependancies in cache
 cache:
@@ -76,8 +74,7 @@ install:
 before_build:
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
-  - cmd: git clone --depth=1 -b 2_0_0-rc_1 git://github.com/Yadoms/yadoms.git 
-  - cmd: git clone --depth=1 -b $env:buildBranch git://github.com/Yadoms/yadoms.git 
+  - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git 
   
   # Read current Yadoms version
   - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
