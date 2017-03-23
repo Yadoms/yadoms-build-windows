@@ -2,7 +2,7 @@
 
 environment:
   # Set here the branch (from original yadoms repository) to build and deploy
-  buildBranch: 2_0_0-rc_1
+  buildBranch: 2_0_0
 
 # version format
 version: 1.0.{build}
