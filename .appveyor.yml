@@ -72,11 +72,11 @@ install:
 
 # scripts to run before build
 before_build:
-  - cmd: dir 'C:/Program Files (x86)/'
-  - cmd: dir 'C:/Program Files (x86)/CMake'
-  - cmd: dir 'C:/Program Files (x86)/CMake/share'
-  - cmd: dir 'C:/Program Files (x86)/CMake/share/cmake-3.7'
-  - cmd: dir 'C:/Program Files (x86)/CMake/share/cmake-3.7/Modules'
+  - ps: dir 'C:\Program Files (x86)'
+  - ps: dir 'C:\Program Files (x86)\CMake'
+  - ps: dir 'C:\Program Files (x86)\CMake\share'
+  - ps: dir 'C:\Program Files (x86)\CMake\share\cmake-3.7'
+  - ps: dir 'C:\Program Files (x86)\CMake\share\cmake-3.7\Modules'
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git
