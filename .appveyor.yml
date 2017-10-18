@@ -74,6 +74,8 @@ install:
 before_build:
   # CMAKE 3.9.4
   - ps: choco upgrade cmake.install --installargs 'ADD_CMAKE_TO_PATH=""System""'
+  - ps: refreshenv
+  - ps: cmake --version
 
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
