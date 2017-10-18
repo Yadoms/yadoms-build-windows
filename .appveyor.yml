@@ -75,6 +75,7 @@ before_build:
   # CMAKE 3.9.4
   - ps: choco upgrade cmake.install --installargs 'ADD_CMAKE_TO_PATH=""System""'
   - ps: refreshenv
+  - ps: new-alias cmake C:\Program Files\CMake\bin\cmake.exe
   - ps: cmake --version
 
   # Yadoms sources
