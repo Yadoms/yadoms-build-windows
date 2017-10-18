@@ -72,15 +72,15 @@ install:
 
 # scripts to run before build
 before_build:
-   # CMAKE 3.9.4
-   - ps: Write-Host "Installing CMake 3.9.4 ..." -ForegroundColor Cyan
-   - ps: $exePath = "$($env:USERPROFILE)\cmake-3.9.4-win64-x64.msi"
-   - ps: Write-Host "Downloading..."
-   - ps: (New-Object Net.WebClient).DownloadFile('https://cmake.org/files/v3.9/cmake-3.9.4-win64-x64.msi', $exePath)
-   - ps: Write-Host "Installing..."
-   - ps: msiexec /quiet /qn /norestart $exePath
-   - ps: cmake --version
-   - ps: Write-Host "CMake 3.9.4 installed" -ForegroundColor Green
+  # CMAKE 3.9.4
+  - ps: Write-Host "Installing CMake 3.9.4 ..." -ForegroundColor Cyan
+  - ps: $exePath = "$($env:USERPROFILE)\cmake-3.9.4-win64-x64.msi"
+  - ps: Write-Host "Downloading..."
+  - ps: (New-Object Net.WebClient).DownloadFile('https://cmake.org/files/v3.9/cmake-3.9.4-win64-x64.msi', $exePath)
+  - ps: Write-Host "Installing..."
+  - ps: msiexec /quiet /qn /norestart $exePath
+  - ps: cmake --version
+  - ps: Write-Host "CMake 3.9.4 installed" -ForegroundColor Green
 
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
