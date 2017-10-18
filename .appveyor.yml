@@ -1,8 +1,8 @@
 # Appveyor script to build and deploy Yadoms for Windows
 
 environment:
-  # Set here the branch (from original yadoms repository) to build and deploy
-  buildBranch: 2_0_0
+  # Set here the branch (from original yadoms repository) to build and deploy (a tag name is also supported)
+  buildBranch: 2.0.0-rc.6
 
 # version format
 version: 1.0.{build}
