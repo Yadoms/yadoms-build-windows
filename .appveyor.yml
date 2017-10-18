@@ -108,7 +108,7 @@ before_build:
   
   # Create solution
   - ps: pushd yadoms
-  - ps: cmake_windows.cmd v141_xp
+  - ps: .\cmake_windows.cmd v141_xp
   - ps: popd
   
 build: off
