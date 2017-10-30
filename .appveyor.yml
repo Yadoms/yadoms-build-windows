@@ -126,6 +126,8 @@ build_script:
   - ps: msbuild PACKAGE.vcxproj /p:Configuration=$env:configuration /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - ps: popd
   - ps: ls 'yadoms/builds/package'
+  #generate update package
+  - cmd: generate_update_package.bat
   
 after_build:
   # Needed step to remove directory structure of artifacts
@@ -134,6 +136,8 @@ after_build:
      Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms installer'
      $packageFile = Get-ChildItem "yadoms/builds/package" -Name -Filter *.zip
      Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms portable'
+     $packageFile = Get-ChildItem "package" -Name -Filter *.zip
+     Push-AppveyorArtifact package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms Update package'
 
 # artifacts:
   # - path: yadoms/builds/package/Yadoms-*.exe
