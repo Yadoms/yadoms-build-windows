@@ -136,8 +136,8 @@ after_build:
      Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms installer'
      $packageFile = Get-ChildItem "yadoms/builds/package" -Name -Filter *.zip
      Push-AppveyorArtifact yadoms/builds/package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms portable'
-     $packageFile = Get-ChildItem "package" -Name -Filter *.zip
-     Push-AppveyorArtifact package/$packageFile -FileName $packageFile -DeploymentName 'Yadoms Update package'
+     $packageFile = Get-ChildItem "." -Name -Filter *.zip
+     Push-AppveyorArtifact $packageFile -FileName $packageFile -DeploymentName 'Yadoms Update package'
 
 # artifacts:
   # - path: yadoms/builds/package/Yadoms-*.exe

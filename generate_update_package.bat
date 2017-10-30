@@ -13,7 +13,7 @@ cd package
 move /Y ..\yadoms\builds\RELEASE .\package
 
 ::copy update script
-copy /Y ..\yadoms\scripts\update.cmd .
+copy /Y ..\yadoms\update\scripts\update.cmd .
 
 ::Get yadoms version from Version.h
 for /f tokens^=2^ delims^=^" %%a in ('find "YadomsVersion(" ^< "..\yadoms\sources\server\version.h" ') do set version=%%a
@@ -33,6 +33,6 @@ for /f tokens^=* %%b in ('git log -1 --pretty^=format:"%%cd" ') do set gitdate=%
 
 
 ::7z a -tzip package.zip ..\builds\package\ -xr!*.ini -xr!*.db3 -xr!*.ilk
-7z a -tzip ..\package.zip  .\ -xr!*.ini -xr!*.db3 -xr!*.ilk
+7z a -tzip ..\package.zip .\ -xr!*.ini -xr!*.db3 -xr!*.ilk
 
 
