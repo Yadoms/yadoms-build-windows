@@ -133,12 +133,10 @@ build_script:
   
   #   get version and last commit date
   - ps: $version = Select-String -Path yadoms\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
-  - ps: pushd yadoms
-  - ps: $gitdate = git log -1 --format=%cd
-  - ps: popd
-  - ps: $content = [IO.File]::ReadAllText("package.json.in")
-  - ps: $content -replace "__version__", $version
-  - ps: $content -replace "__gitdate__", $gitdate
+  - ps: $gitdate = git --git-dir=.\yadoms log -1 --format=%cd 
+  - ps: $content = Get-Content '.\package.json.in'
+  - ps: $content = $content -replace "__version__", $version
+  - ps: $content = $content -replace "__gitdate__", $gitdate
   - ps: Out-File -InputObject $content -FilePath package.json
   - ps: 7z a -tzip package.zip .\package\ -xr!*.ini -xr!*.db3 -xr!*.ilk
   
