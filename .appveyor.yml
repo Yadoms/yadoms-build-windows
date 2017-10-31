@@ -137,6 +137,7 @@ build_script:
   - ps: $gitdate = git log -1 --format=%cd
   - ps: '{ "yadoms": { "information": { "version": "' + $version + '", "releaseDate": "' + $gitdate + '", "commandToRun": "update.cmd" } } }' | out-file package.json
   - ps: 7z a -tzip ..\package.zip .\ -xr!*.ini -xr!*.db3 -xr!*.ilk
+  - ps: popd
   
 after_build:
   # Needed step to remove directory structure of artifacts
