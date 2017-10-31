@@ -133,7 +133,8 @@ build_script:
   
   #   get version and last commit date
   - ps: $version = Select-String -Path yadoms\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
-  - ps: $gitdate = git --git-dir=.\yadoms log -1 --format=%cd 
+  - ps: $gitdate = git --git-dir=.\yadoms\.git log -1 --format=%cd 
+  - ps: Write-Host "Generating package.zip for Yadoms " + $version + " release on " + $gitdate
   - ps: $content = Get-Content '.\package.json.in'
   - ps: $content = $content -replace "__version__", $version
   - ps: $content = $content -replace "__gitdate__", $gitdate
