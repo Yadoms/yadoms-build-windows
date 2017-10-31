@@ -127,7 +127,16 @@ build_script:
   - ps: popd
   - ps: ls 'yadoms/builds/package'
   #generate update package
-  - cmd: generate_update_package.bat
+  - ps: New-Item package -type directory
+  - ps: pushd package
+  - ps: Move-Item yadoms\builds\RELEASE .\package
+  - ps: Copy-Item yadoms\update\scripts\update.cmd .\
+  #   get version
+  - ps: $version = Select-String -Path ..\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
+  #   get last commit date
+  - ps: $gitdate = git log -1 --format=%cd
+  - ps: '{ "yadoms": { "information": { "version": "' + $version + '", "releaseDate": "' + $gitdate + '", "commandToRun": "update.cmd" } } }' | out-file package.json
+  - ps: 7z a -tzip ..\package.zip .\ -xr!*.ini -xr!*.db3 -xr!*.ilk
   
 after_build:
   # Needed step to remove directory structure of artifacts
