@@ -139,7 +139,11 @@ build_script:
   - ps: $content = $content -replace "__version__", $version
   - ps: $content = $content -replace "__gitdate__", $gitdate
   - ps: Out-File -InputObject $content -FilePath package.json
-  - ps: 7z a -tzip package.zip .\package\ -xr!*.ini -xr!*.db3 -xr!*.ilk
+  #- ps: 7z a -tzip package.zip .\package\ -xr!*.ini -xr!*.db3 -xr!*.ilk
+  - ps: Remove-Item .\package\yadoms.ini
+  - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
+  - ps: Get-ChildItem * -Include *.db3 -Recurse | Remove-Item
+  - ps: 7z a -tzip package.zip .\package\
   
 after_build:
   # Needed step to remove directory structure of artifacts
