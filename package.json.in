@@ -1,7 +1,7 @@
 {
 	"yadoms": {
 		"information": {
-			"version": "__version",
+			"version": "__version__",
 			"releaseDate": "__gitdate__",
 			"commandToRun": "update.cmd"
 		}
