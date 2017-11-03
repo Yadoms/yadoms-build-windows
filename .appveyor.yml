@@ -143,6 +143,7 @@ build_script:
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
   - ps: Get-ChildItem * -Include *.ini | Remove-Item
   - ps: 7z a -tzip ..\package.zip .\
+  - ps: cd ..
   
 after_build:
   # Needed step to remove directory structure of artifacts
