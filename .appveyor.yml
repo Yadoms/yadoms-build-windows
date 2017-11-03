@@ -135,13 +135,14 @@ build_script:
   - ps: $version = Select-String -Path yadoms\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
   - ps: $gitdate = git --git-dir=.\yadoms\.git log -1 --format=%cd 
   - ps: Write-Host "Generating package.zip for Yadoms " + $version + " release on " + $gitdate
-  - ps: $content = Get-Content '.\package.json.in'
+  - ps: cd package
+  - ps: $content = Get-Content '..\package.json.in'
   - ps: $content = $content -replace "__version__", $version
   - ps: $content = $content -replace "__gitdate__", $gitdate
-  - ps: Out-File -InputObject $content -FilePath package.json
-  #- ps: 7z a -tzip package.zip .\package\ -xr!*.ini -xr!*.db3 -xr!*.ilk
+  - ps: Out-File -InputObject $content -FilePath .\package.json
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
-  - ps: 7z a -tzip package.zip .\package\
+  - ps: Get-ChildItem * -Include *.ini | Remove-Item
+  - ps: 7z a -tzip ..\package.zip .\
   
 after_build:
   # Needed step to remove directory structure of artifacts
