@@ -141,7 +141,7 @@ build_script:
   - ps: $content = $content -replace "__gitdate__", $gitdate
   - ps: Out-File -InputObject $content -FilePath .\package.json
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
-  - ps: Get-ChildItem * -Include *.ini | Remove-Item
+  - ps: Get-ChildItem * -Include .\package\*.ini | Remove-Item
   - ps: 7z a -tzip ..\package.zip .\
   - ps: cd ..
   
