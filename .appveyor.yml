@@ -139,7 +139,7 @@ build_script:
   - ps: $content = Get-Content '..\package.json.in'
   - ps: $content = $content -replace "__version__", $version
   - ps: $content = $content -replace "__gitdate__", $gitdate
-  - ps: Out-File -InputObject $content -FilePath .\package.json
+  - ps: Out-File -InputObject $content -FilePath .\package.json -Encoding UTF8
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
   - ps: Get-ChildItem * -Include yadoms.ini -Recurse | Remove-Item
   - ps: 7z a -tzip ..\package.zip .\
