@@ -129,7 +129,7 @@ build_script:
   
   #   get version and last commit date
   - ps: $gitDate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
-  - ps: Write-Host "Generating package.zip for Yadoms $yadomsVersion release on $gitDate
+  - ps: Write-Host "Generating package.zip for Yadoms $yadomsVersion release on $gitDate"
   - ps: cd package
   - ps: $content = Get-Content '..\package.json.in'
   - ps: $content = $content -replace "__version__", $yadomsVersion
