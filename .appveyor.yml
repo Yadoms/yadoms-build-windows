@@ -74,9 +74,6 @@ install:
 
 # scripts to run before build
 before_build:
-  # CMake
-  - ps: cmake --version
-
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git
