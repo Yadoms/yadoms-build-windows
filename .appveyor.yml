@@ -128,14 +128,14 @@ build_script:
   - ps: Copy-Item yadoms\update\scripts\update.cmd .\package\
   
   #   get version and last commit date
-  - ps: $gitdate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
-  - ps: Write-Host "Generating package.zip for Yadoms " + $yadomsVersion + " release on " + $gitdate
+  - ps: $gitDate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
+  - ps: Write-Host "Generating package.zip for Yadoms $yadomsVersion release on $gitDate
   - ps: cd package
   - ps: $content = Get-Content '..\package.json.in'
   - ps: $content = $content -replace "__version__", $yadomsVersion
-  - ps: $content = $content -replace "__gitdate__", $gitdate
+  - ps: $content = $content -replace "__gitdate__", $gitDate
   - ps: Out-File -InputObject $content -FilePath .\package.json -Encoding UTF8
-  - ps: Copy-Item ..\yadoms\changelog.md .\
+  - ps: Copy-Item ..\yadoms\sources\server\changelog.md .\
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
   - ps: Get-ChildItem * -Include yadoms.ini -Recurse | Remove-Item
   - ps: 7z a -tzip ..\package.zip .\
@@ -166,4 +166,3 @@ deploy:
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
     folder: appveyor_build/win32
-    debug: true     # show complete FTP log
