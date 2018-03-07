@@ -79,8 +79,8 @@ before_build:
   - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git
   
   # Read current Yadoms version
-  - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
-  - ps: echo "Yadoms version is $YadomsVersion"
+  - ps: $yadomsVersion = (Select-String -Path yadoms\sources\server\changelog.md -Pattern '^### (.*)$')[0] | Foreach-Object {$_.Matches} | Foreach-Object {$_.Groups[1].Value}
+  - ps: Write-Host "Yadoms version is $yadomsVersion"
 
   # Yadoms configuration file
   - ps: echo "Create Yadoms configuration file CMakeListsUserConfig.txt..."
@@ -128,12 +128,11 @@ build_script:
   - ps: Copy-Item yadoms\update\scripts\update.cmd .\package\
   
   #   get version and last commit date
-  - ps: $version = Select-String -Path yadoms\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
   - ps: $gitdate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
-  - ps: Write-Host "Generating package.zip for Yadoms " + $version + " release on " + $gitdate
+  - ps: Write-Host "Generating package.zip for Yadoms " + $yadomsVersion + " release on " + $gitdate
   - ps: cd package
   - ps: $content = Get-Content '..\package.json.in'
-  - ps: $content = $content -replace "__version__", $version
+  - ps: $content = $content -replace "__version__", $yadomsVersion
   - ps: $content = $content -replace "__gitdate__", $gitdate
   - ps: Out-File -InputObject $content -FilePath .\package.json -Encoding UTF8
   - ps: Copy-Item ..\yadoms\changelog.md .\
