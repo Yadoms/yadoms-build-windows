@@ -74,16 +74,13 @@ install:
 
 # scripts to run before build
 before_build:
-  # CMake
-  - ps: cmake --version
-
   # Yadoms sources
   - ps: echo "Downloading yadoms sources from $env:buildBranch branch..."
   - cmd: git clone -q --depth=1 --branch=%buildBranch% git://github.com/Yadoms/yadoms.git
   
   # Read current Yadoms version
-  - ps: $YadomsVersion = (Select-String -Pattern 'YadomsVersion\("(.*)"\)' -path .\yadoms\sources\server\Version.h).Matches.Groups[1].Value
-  - ps: echo "Yadoms version is $YadomsVersion"
+  - ps: $yadomsVersion = (Select-String -Path yadoms\sources\server\changelog.md -Pattern '^### (.*)$')[0] | Foreach-Object {$_.Matches} | Foreach-Object {$_.Groups[1].Value}
+  - ps: Write-Host "Yadoms version is $yadomsVersion"
 
   # Yadoms configuration file
   - ps: echo "Create Yadoms configuration file CMakeListsUserConfig.txt..."
@@ -131,15 +128,14 @@ build_script:
   - ps: Copy-Item yadoms\update\scripts\update.cmd .\package\
   
   #   get version and last commit date
-  - ps: $version = Select-String -Path yadoms\sources\server\Version.h '.*\("(.*)"\)' -AllMatches | Foreach {$_.Matches | Foreach {$_.Groups[1] | Foreach {$_.Value}}}
-  - ps: $gitdate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
-  - ps: Write-Host "Generating package.zip for Yadoms " + $version + " release on " + $gitdate
+  - ps: $gitDate = git --git-dir=.\yadoms\.git log -1 --format=%cI 
+  - ps: Write-Host "Generating package.zip for Yadoms $yadomsVersion release on $gitDate"
   - ps: cd package
   - ps: $content = Get-Content '..\package.json.in'
-  - ps: $content = $content -replace "__version__", $version
-  - ps: $content = $content -replace "__gitdate__", $gitdate
+  - ps: $content = $content -replace "__version__", $yadomsVersion
+  - ps: $content = $content -replace "__gitdate__", $gitDate
   - ps: Out-File -InputObject $content -FilePath .\package.json -Encoding UTF8
-  - ps: Copy-Item ..\yadoms\changelog.md .\
+  - ps: Copy-Item ..\yadoms\sources\server\changelog.md .\
   - ps: Get-ChildItem * -Include *.ilk -Recurse | Remove-Item
   - ps: Get-ChildItem * -Include yadoms.ini -Recurse | Remove-Item
   - ps: 7z a -tzip ..\package.zip .\
@@ -170,4 +166,3 @@ deploy:
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
     folder: appveyor_build/win32
-    debug: true     # show complete FTP log
