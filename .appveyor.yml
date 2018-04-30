@@ -165,4 +165,4 @@ deploy:
     username: janofnxr-yadoms
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
-    folder: appveyor_build/win32
+    folder: builds/win32
