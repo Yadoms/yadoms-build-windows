@@ -163,7 +163,7 @@ after_build:
 deploy:
   - provider: FTP
     protocol: ftp
-    host: ftp.jano42.fr
+    host: ftp.cluster010.hosting.ovh.net
     username: janofnxr-yadoms
     password:
       secure: 8tosT9FAJxX+SRgkw02I1A==
